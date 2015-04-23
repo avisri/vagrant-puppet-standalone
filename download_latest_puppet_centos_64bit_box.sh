@@ -4,7 +4,7 @@ latest=`lynx -listonly   -dump https://atlas.hashicorp.com/puppetlabs| tr ' ' '\
 if [ "$latest" != "" ]
 then
 	
-	vagrant box add base $latest
+	vagrant box add $latest
 fi
 
 mkdir -p ~/vagrant/puppet/{manifests,modules}

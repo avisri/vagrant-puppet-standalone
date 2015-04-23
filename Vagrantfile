@@ -18,6 +18,7 @@ Vagrant.configure(2) do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "puppetlabs/centos-7.0-64-puppet"
+  config.vm.host_name = "development.anash.vm"
 
 
   config.vm.network "private_network", ip: "192.168.50.4", virtualbox__intnet: true
@@ -47,7 +48,7 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
+  config.vm.synced_folder "./puppet", "/puppet"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -78,4 +79,14 @@ Vagrant.configure(2) do |config|
   #   sudo apt-get update
   #   sudo apt-get install -y apache2
   # SHELL
+  
+  #Puppet shared folder
+  #config.vm.share_folder "puppet_mount", "/puppet", "puppet"
+  # Puppet Provisioner setup
+  config.vm.provision :puppet do |puppet|
+    puppet.manifests_path = "puppet/manifests"
+    puppet.module_path    = "puppet/modules"
+    puppet.manifest_file  = "site.pp"
+  end
+
 end
